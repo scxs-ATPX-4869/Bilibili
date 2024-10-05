@@ -1,0 +1,8 @@
+{
+    "buvid3ANDbuvid4" : "https://api.bilibili.com/x/frontend/finger/spi",
+    "generateLoginQRcodeData" : "https://passport.bilibili.com/x/passport-login/web/qrcode/generate?source=main-fe-header&go_url=https:%2F%2Fwww.bilibili.com%2F",
+    "checkStateOfLoginQRcode" : "https://passport.bilibili.com/x/passport-login/web/qrcode/poll?qrcode_key={qrcode_key}&source=main-fe-header",
+    "bili_ticket" : "https://api.bilibili.com/bapis/bilibili.api.ticket.v1.Ticket/GenWebTicket",
+    "watching_numberPeople": "https://api.bilibili.com/x/player/online/total",
+    "checkAccountState": "https://api.bilibili.com/x/space/user/setting/list"
+}

@@ -2,8 +2,7 @@ import time
 import json
 import re
 import requests
-
-
+import os
 
 
 class videoParse():
@@ -243,8 +242,8 @@ class videoParse():
 
 
 video_url = "https://www.bilibili.com/video/BV1PcpeeDEoW/" # 视频的B站链接
-with open('Bilibili_scrape/data/Cookies/Cookies.json', 'r') as f:
-        cookie = json.loads(f.read())
+# with open('Bilibili_scrape/data/Cookies/Cookies.json', 'r') as f:
+        # cookie = json.loads(f.read())
 def load_Cookies(cookies:dict, keys:list=None) -> str:
     '''
     This method will connect cookie with "keys"
@@ -261,15 +260,35 @@ def load_Cookies(cookies:dict, keys:list=None) -> str:
     
 headers = {
     "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36",
-    "Cookie": load_Cookies(cookies=cookie)
+    # "Cookie": load_Cookies(cookies=cookie)
 }
 
 
 video = videoParse(video_url=video_url, headers=headers)
-styles = video.audio_supportFormats()
-print(json.dumps(styles, indent='\t'))
+bvid = video.video_bvid()
+result_parse = {
+    'title': video.video_title(),
+    'owner': video.video_owner(),
+    'cover': video.video_cover(),
+    'state': video.video_state(),
+    'video url': video.video_url(),
+    'publicate date': video.video_publicate_date(),
+    'duration': video.video_duration(),
+    'bvid': video.video_bvid(),
+    'aid': video.video_aid(),
+    'abstract': video.video_abstract(),
+    'seasonID': video.video_seasonID(),
+    'video': {
+        'source': video.video_informationOfDifferentDefinition(),
+    },
+    'audio': {
+        'source': video.audio_informationOfDifferentBandwidth(),
+        'dolby': video.audio_dolbyInformation(),
+    }
+}
 
+cwd = os.getcwd()
+path = f'{cwd}/Bilibili_scrape/data/{bvid}.json'
 
-
-
-
+with open(path, 'w') as f:
+    f.write(json.dumps(result_parse, indent='\t', ensure_ascii=False))

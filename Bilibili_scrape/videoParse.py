@@ -241,31 +241,10 @@ class videoParse():
         return seasonID
 
 
-# with open('Bilibili_scrape/data/Cookies/Cookies.json', 'r') as f:
-        # cookie = json.loads(f.read())
-def load_Cookies(cookies:dict, keys:list=None) -> str:
-    '''
-    This method will connect cookie with "keys"
-    '''
-    string = ""
-    if keys == None:
-        for key, value in cookies.items():
-            string += f"{key}={value};"
-    else:
-        for key in keys:
-            string += f"{key}={cookies[key]};"
-    
-    return string
-headers = {
-    "User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36",
-    # "Cookie": load_Cookies(cookies=cookie)
-}
-
-
-def get_information(url:str):
+def get_information(url:str, headers):
     '''
     Save a json that contains the result of parsing\n
-    Return the path of json
+    :return The path of json
     '''
     video = videoParse(video_url=url, headers=headers)
     bvid = video.video_bvid()
@@ -292,7 +271,7 @@ def get_information(url:str):
         },
     }
     cwd = os.getcwd()
-    path = f'{cwd}/Bilibili_scrape/data/{bvid}.json'
+    path = f'{cwd}/Bilibili_scrape/data/parseData/{bvid}.json'
     with open(path, 'w') as f:
         f.write(json.dumps(result_parse, indent='\t', ensure_ascii=False))
     
